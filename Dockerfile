@@ -34,7 +34,10 @@ RUN set -ex && \
     for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION} glibc-i18n-${GLIBC_VERSION}; do curl -sSL ${GLIBC_REPO}/releases/download/${GLIBC_VERSION}/${pkg}.apk -o /tmp/${pkg}.apk; done && \
     apk add --allow-untrusted /tmp/*.apk && \
     rm -v /tmp/*.apk && \
+    IFS_BCK="${IFS}" && \
+    IFS=" " && \
     ( echo "${LOCALES}" | xargs -i /usr/glibc-compat/bin/localedef -c -i POSIX -f ${CHARSET} {}.${CHARSET} || true ) && \
+    IFS="${IFS_BCK}" && \
     echo "export LANG=${LANG}" > /etc/profile.d/locale.sh && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
     mkdir -p /opt && \
