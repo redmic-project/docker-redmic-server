@@ -13,11 +13,10 @@ ENV JAVA_VERSION_MAJOR=8 \
     PATH=${PATH}:/opt/jdk/bin \
     GLIBC_REPO=https://github.com/sgerrand/alpine-pkg-glibc \
     GLIBC_VERSION=2.27-r0 \
-    ORACLE_SUBPATH=96a7b8442fe848ef90c96a2fad6ed6d1
-
-ENV DIRPATH=/opt/redmic \
+    ORACLE_SUBPATH=96a7b8442fe848ef90c96a2fad6ed6d1 \
+    DIRPATH=/opt/redmic \
     SPRING_PROFILES_ACTIVE=dev \
-    JAVA_OPTS="-Xmx1g -Xss1g" \
+    DEFAULT_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -XshowSettings:vm -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" \
     LOG_LEVEL=error \
     LOCALE=es_ES \
     CHARSET=UTF-8 \
