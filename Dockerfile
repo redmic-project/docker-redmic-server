@@ -22,6 +22,8 @@ ENV JAVA_VERSION_MAJOR=8 \
     CHARSET=UTF-8 \
     LOCALES="es_ES en_EN"
 
+ENV JAVA_BIN=${JAVA_HOME}/bin/java
+
 # Default language, additional ones must be declared on LOCALES environment variable
 ENV LANG=${LOCALE}.${CHARSET} \
     LANGUAGE=${LOCALE}.${CHARSET}
