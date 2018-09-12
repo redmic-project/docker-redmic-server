@@ -16,6 +16,7 @@ ENV JAVA_VERSION_MAJOR=8 \
     ORACLE_SUBPATH=96a7b8442fe848ef90c96a2fad6ed6d1 \
     DIRPATH=/opt/redmic \
     SPRING_PROFILES_ACTIVE=dev \
+    DEFAULT_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -XshowSettings:vm -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" \
     LOG_LEVEL=error \
     LOCALE=es_ES \
     CHARSET=UTF-8 \
@@ -88,5 +89,4 @@ RUN set -ex && \
 
 WORKDIR ${DIRPATH}
 
-ENTRYPOINT ["/opt/jdk/bin/java", "-Djava.security.egd=file:/dev/./urandom", "-XshowSettings:vm", \
-  "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap"]
+ENTRYPOINT ${JAVA_HOME}/bin/java ${DEFAULT_JAVA_OPTS} ${JAVA_OPTS} -jar ${DIRPATH}/${MICROSERVICE_NAME}.jar
