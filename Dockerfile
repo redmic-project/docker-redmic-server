@@ -16,13 +16,10 @@ ENV JAVA_VERSION_MAJOR=8 \
     ORACLE_SUBPATH=96a7b8442fe848ef90c96a2fad6ed6d1 \
     DIRPATH=/opt/redmic \
     SPRING_PROFILES_ACTIVE=dev \
-    DEFAULT_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -XshowSettings:vm -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" \
     LOG_LEVEL=error \
     LOCALE=es_ES \
     CHARSET=UTF-8 \
     LOCALES="es_ES en_EN"
-
-ENV JAVA_BIN=${JAVA_HOME}/bin/java
 
 # Default language, additional ones must be declared on LOCALES environment variable
 ENV LANG=${LOCALE}.${CHARSET} \
@@ -90,3 +87,6 @@ RUN set -ex && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
 
 WORKDIR ${DIRPATH}
+
+ENTRYPOINT ["/opt/jdk/bin/java", "-Djava.security.egd=file:/dev/./urandom", "-XshowSettings:vm", \
+  "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap"]
