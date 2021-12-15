@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  maven:
+    image: ${IMAGE_NAME:-registry.gitlab.com/redmic-project/docker/redmic-server}:${IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE:-Dockerfile}
+      args:
+        OPENJDK_IMAGE_TAG:
+        WGET_VERSION:
