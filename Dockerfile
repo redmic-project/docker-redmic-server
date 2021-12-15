@@ -1,5 +1,5 @@
-ARG IMAGE_TAG=8u312-jdk-slim-bullseye
-FROM openjdk:${IMAGE_TAG}
+ARG OPENJDK_IMAGE_TAG=8u312-jdk-slim-bullseye
+FROM openjdk:${OPENJDK_IMAGE_TAG}
 
 LABEL maintainer="info@redmic.es"
 
