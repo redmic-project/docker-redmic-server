@@ -3,22 +3,15 @@ FROM openjdk:${IMAGE_TAG}
 
 LABEL maintainer="info@redmic.es"
 
-ARG	LOCALES_VERSION=2.31-13+deb11u2 \
-	WGET_VERSION=1.21-1+b1 \
-	LANG=es_ES.UTF-8
+ARG	WGET_VERSION=1.21-1+b1
 
-ENV LANG=${LANG} \
-	DIRPATH=/opt/redmic \
-	DEFAULT_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -XshowSettings:vm -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dlog4j.formatMsgNoLookups=true" \
+ENV DIRPATH=/opt/redmic \
+	DEFAULT_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -XshowSettings:vm -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dlog4j.formatMsgNoLookups=true -Duser.country=ES -Duser.language=es" \
 	LOG_LEVEL=error
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-		locales="${LOCALES_VERSION}" \
 		wget="${WGET_VERSION}" && \
-	rm -rf /var/lib/apt/lists/* && \
-	sed -i -e "s/# ${LANG} UTF-8/${LANG} UTF-8/" /etc/locale.gen && \
-	dpkg-reconfigure --frontend=noninteractive locales && \
-	update-locale LANG="${LANG}"
+	rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${DIRPATH}
 
