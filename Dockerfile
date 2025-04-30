@@ -1,18 +1,15 @@
-ARG OPENJDK_IMAGE_TAG=8u312-jdk-slim-bullseye
-FROM openjdk:${OPENJDK_IMAGE_TAG}
+ARG BASE_IMAGE_TAG="21-jdk-alpine"
+FROM eclipse-temurin:${BASE_IMAGE_TAG}
 
 LABEL maintainer="info@redmic.es"
 
-ARG WGET_VERSION=1.21-1+b1
+ARG DIRPATH \
+	DEFAULT_JAVA_OPTS \
+	LOG_LEVEL
 
-ENV DIRPATH=/opt/redmic \
-	DEFAULT_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -XshowSettings:vm -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dlog4j.formatMsgNoLookups=true -Duser.country=ES -Duser.language=es" \
-	LOG_LEVEL=error
+ENV DEFAULT_JAVA_OPTS="${DEFAULT_JAVA_OPTS}" \
+	LOG_LEVEL="${LOG_LEVEL}"
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		wget="${WGET_VERSION}" && \
-	rm -rf /var/lib/apt/lists/*
+WORKDIR "${DIRPATH}"
 
-WORKDIR ${DIRPATH}
-
-ENTRYPOINT java ${DEFAULT_JAVA_OPTS} ${JAVA_OPTS} -jar "${DIRPATH}/${MICROSERVICE_NAME}.jar"
+ENTRYPOINT java ${DEFAULT_JAVA_OPTS} ${JAVA_OPTS} -jar "${MICROSERVICE_NAME}.jar"
